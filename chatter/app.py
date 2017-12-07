@@ -4,10 +4,12 @@ from chatterbot.trainers import ChatterBotCorpusTrainer
 
 app = Flask(__name__)
 
-english_bot = ChatBot("English Bot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
+english_bot = ChatBot("Taking Bot",
+                      storage_adapter="chatterbot.storage.MongoDatabaseAdapter",
+                      )
 
 english_bot.set_trainer(ChatterBotCorpusTrainer)
-english_bot.train("chatterbot.corpus.english")
+english_bot.train("chatterbot.corpus.custom")
 
 
 @app.route("/")
@@ -19,5 +21,3 @@ def get_raw_response(query):
     return str(english_bot.get_response(query))
 
 
-if __name__ == "__main__":
-    app.run()
